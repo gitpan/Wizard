@@ -15,6 +15,8 @@ my @modules = qw(Wizard
 		 Wizard::State
 		 Wizard::SaveAble
 		 HTML::EP::Wizard
+	         Wizard::Examples
+	         Wizard::Examples::ISDN
 		 Wizard::Examples::Apache
 		 Wizard::Examples::Apache::Directory
 		 Wizard::Examples::Apache::VirtualServer

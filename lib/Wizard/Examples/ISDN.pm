@@ -4,13 +4,13 @@ use strict;
 
 use Wizard::State ();
 use Wizard::SaveAble ();
-use Wizard::Examples::Apache::Config ();
+use Wizard::Examples::ISDN::Config ();
 
 
-package Wizard::Examples::Apache;
+package Wizard::Examples::ISDN;
 
-@Wizard::Examples::Apache::ISA     = qw(Wizard::Examples);
-$Wizard::Examples::Apache::VERSION = '0.01';
+@Wizard::Examples::ISDN::ISA     = qw(Wizard::Examples);
+$Wizard::Examples::ISDN::VERSION = '0.01';
 
 
 sub GetKey { 'prefs'; };
@@ -19,42 +19,35 @@ sub init {
     my $self = shift;
     my $prefs = $self->{'prefs'} || die "Missing preferences";
     return ($prefs) unless shift;
-    my $basedir = $prefs->{'apache-prefs-basedir'} || die "Missing basedir";
-    wantarray ? ($prefs, $basedir) : $prefs;
+    my $cfile = $prefs->{'isdn-prefs-cfile'} || die "Missing config file";
+    wantarray ? ($prefs, $cfile) : $prefs;
 }
 
-sub getFileDir {
-    my($self, $wiz) = @_;
-    my $basedir = $self->{'prefs'}->{'apache-prefs-basedir'};
-    wantarray ? ($basedir, $basedir) : $basedir;
-}
 
 sub Action_Reset {
     my($self, $wiz) = @_;
 
     # Load prefs, if required.
     unless ($self->{'prefs'}) {
-	my $cfg = $Wizard::Examples::Apache::Config::config;
-	my $file = $cfg->{'apache-prefs-file'};
+	my $cfg = $Wizard::Examples::ISDN::Config::config;
+	my $file = $cfg->{'isdn-prefs-file'};
 	$self->{'prefs'} = Wizard::SaveAble->new('file' => $file, 'load' => 1);
 	$self->Store($wiz);
     }
 
     # Return the initial menu.
-    (['Wizard::Elem::Title', 'value' => 'Apache Wizard Menu'],
-     ['Wizard::Elem::Submit', 'value' => 'Host Menu',
-      'name' => 'Wizard::Examples::Apache::Host::Action_Reset',
+    (['Wizard::Elem::Title', 'value' => 'ISDN Wizard Menu'],
+     ['Wizard::Elem::Submit', 'value' => 'ISDN Wizard preferences',
+      'name' => 'Wizard::Examples::ISDN::Action_Preferences',
       'id' => 1],
-     ['Wizard::Elem::BR'],
-     ['Wizard::Elem::Submit', 'value' => 'Apache Wizard preferences',
-      'name' => 'Action_Preferences',
+     ['Wizard::Elem::Submit', 'value' => 'ISDN Settings Wizard',
+      'name' => 'Wizard::Examples::ISDN::Settings::Action_Reset',
       'id' => 2],
      ['Wizard::Elem::BR'],
      ['Wizard::Elem::Submit', 'value' => 'Return to Wizard Examples',
       'name' => 'Wizard::Examples::Action_Reset',
       'id' => 98],
-     ['Wizard::Elem::BR'],
-     ['Wizard::Elem::Submit', 'value' => 'Exit Apache Wizard',
+     ['Wizard::Elem::Submit', 'value' => 'Exit ISDN Wizard',
       'id' => 99]);
 }
 
@@ -64,10 +57,13 @@ sub Action_Preferences {
     my $prefs = $self->init();
 
     # Return a list of input elements.
-    (['Wizard::Elem::Title', 'value' => 'Apache Wizard Preferences'],
-     ['Wizard::Elem::Text', 'name' => 'apache-prefs-basedir',
-      'value' => $prefs->{'apache-prefs-basedir'},
-      'descr' => 'Base Directory of the Apache Wizard'],
+    (['Wizard::Elem::Title', 'value' => 'ISDN Wizard Preferences'],
+     ['Wizard::Elem::Text', 'name' => 'isdn-prefs-cfile',
+      'value' => $prefs->{'isdn-prefs-cfile'},
+      'descr' => 'ISDN Configfile'],
+     ['Wizard::Elem::Text', 'name' => 'isdn-prefs-updatecmd',
+      'value' => $prefs->{'isdn-prefs-updatecmd'},
+      'descr' => 'Command that will be executed on update'],
      ['Wizard::Elem::Submit', 'name' => 'Action_PreferencesSave',
       'value' => 'Save these settings', 'id' => 1],
      ['Wizard::Elem::Submit', 'name' => 'Action_PreferencesReset',
@@ -80,7 +76,7 @@ sub Action_Preferences {
 sub Action_PreferencesSave {
     my($self, $wiz) = @_;
     my $prefs = $self->init();
-    foreach my $opt (qw(apache-prefs-basedir)) {
+    foreach my $opt (qw(isdn-prefs-cfile isdn-prefs-updatecmd)) {
 	$prefs->{$opt} = $wiz->param($opt) if defined($wiz->param($opt));
     }
     $prefs->Modified(1);
@@ -97,3 +93,4 @@ sub Action_PreferencesReset {
 
 
 1;
+

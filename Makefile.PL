@@ -9,22 +9,18 @@ Getopt::Long::GetOptions('config');
 
 my $ok = 1;
 my %prereq;
-$prereq{'Data::Dumper'} = 0;
-print "Checking for Data::Dumper ... ";
-if (!eval { require Data::Dumper }) {
-    $ok = 0;
-    print "\nYou don't have installed the Data::Dumper module.\n";
-} else {
-    print "ok\n";
-}
 
-$prereq{'HTML::EP'} = 0;
-print "Checking for HTML::EP ... ";
-if (!eval { require HTML::EP }) {
-    $ok = 0;
-    print "\nYou don't have installed the HTML::EP package.\n";
-} else {
-    print "ok\n";
+my @check_mods = qw(Data::Dumper HTML::EP File::Spec File::Path Symbol);
+
+foreach my $mod (@check_mods) {
+    $prereq{$mod} = 0;
+    print "Checking for $mod ... ";
+    if (!eval " require $mod ") {
+	$ok = 0;
+	print "\nYou don't have installed the $mod module.\n";
+    } else {
+	print "ok\n";
+    }
 }
 
 unless ($ok) {

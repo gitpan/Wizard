@@ -22,6 +22,9 @@ lib/Wizard/Elem/Link/HTML.pm
 lib/Wizard/Elem/Link/Shell.pm
 lib/Wizard/Elem/CheckBox/HTML.pm
 lib/Wizard/Elem/CheckBox/Shell.pm
+lib/Wizard/Examples.pm
+lib/Wizard/Examples/ISDN.pm
+lib/Wizard/Examples/ISDN/Settings.pm
 lib/Wizard/Examples/Apache.pm
 lib/Wizard/Examples/Apache.pod
 lib/Wizard/Examples/Apache/Admin.pm
@@ -37,6 +40,7 @@ lib/Wizard/Form.pm
 lib/Wizard/Form/HTML.pm
 lib/Wizard/Form/Shell.pm
 lib/Wizard/SaveAble.pm
+lib/Wizard/SaveAble/ShellVars.pm
 lib/Wizard/Shell.pm		Wizard subclass running in a shell
 lib/Wizard/HTML.pm		Wizard subclass running in a web browser
 lib/Wizard/State.pm
