@@ -57,8 +57,8 @@ sub Display {
 
     $form->AddHTML('<tr><td>' . HTML::Entities::encode_entities($self->{'descr'})
 		   . '</td><td><input ' . $attrstr . '></td><td><a href="'
-		   . $hurl . '?module=' . URI::Escape::uri_escape($mod)
-		   . '#' . URI::Escape::uri_escape($item) . '">Help'
+		   . $hurl . '?module=' . CGI->escape($mod)
+		   . '#' . CGI->escape($item) . '">Help'
 		   . '</a></td></tr>');
 }
 

@@ -1,0 +1,5 @@
+1999-09-28  Jochen Wiedmann  <joe@ispsoft.de> (0.1004)
+
+	* Replaced URI::Escape::uri_escape with CGI->escape. Required for
+	  HTML::EP 0.20.
+
