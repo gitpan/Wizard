@@ -50,8 +50,8 @@ sub Display {
     my $item = "item_" . $self->{'name'}; $item =~ s/\-/\_/g;
     foreach my $key (keys %$self) {
 	my $keystr = $key; $keystr =~ tr/a-z/A-Z/;
-	$attrstr .= ' ' . $keystr . '="' 
-	         . HTML::Entities::encode_entities($self->{$key}) . '" '; 
+	$attrstr .= ' ' . $keystr . '="'
+	         . HTML::Entities::encode_entities($self->{$key}) . '" ';
     }
 
 

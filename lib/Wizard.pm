@@ -35,7 +35,7 @@ use strict;
 
 package Wizard;
 
-$Wizard::VERSION = '0.1004';
+$Wizard::VERSION = '0.1006';
 
 
 =pod
