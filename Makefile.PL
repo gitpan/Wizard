@@ -53,6 +53,29 @@ if (!open(FILE, ">lib/Wizard/Examples/Apache/Config.pm")  or
     die "Failed to create file lib/Wizard/Examples/Apache/Config.pm: $!";
 }
 
+my $icfg;
+if (-f "lib/Wizard/Examples/ISDN/Config.pm") {
+    $icfg = eval { require "lib/Wizard/Examples/ISDN/Config.pm" };
+}
+if (!$icfg  ||  $opt_config) {
+    my $prefsfile = $icfg->{'isdn-prefs-file'} || '/etc/sysconfig/isdn/prefs';
+    $icfg->{'isdn-prefs-file'} =
+	prompt("Enter path of the ISDN Wizard prefs file:", $prefsfile);
+}
+die "Failed to create directory lib/Wizard/Examples/ISDN: $!"
+    unless ((-d "lib/Wizard/Examples/ISDN")  or
+	    mkdir("lib/Wizard/Examples/ISDN", 0755));
+my $dump = Data::Dumper->new([$icfg],
+			     ["Wizard::Examples::Apache::ISDN::config"]);
+$dump->Indent(1);
+if (!open(FILE, ">lib/Wizard/Examples/ISDN/Config.pm")  or
+    !(print FILE ("package Wizard::Examples::ISDN::Config;\n",
+		  $dump->Dump()))  or
+    !close(FILE)) {
+    die "Failed to create file lib/Wizard/Examples/ISDN/Config.pm: $!";
+}
+
+
 my %opts = ('NAME'         => 'Wizard',
 	    'VERSION_FROM' => 'lib/Wizard.pm',
 	    'EXE_FILES'    => [ 'wizard', 'apacheAdmin' ],
